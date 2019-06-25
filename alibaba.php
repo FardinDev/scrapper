@@ -42,37 +42,16 @@ foreach($thumb->find('img') as $item){
     
 }
 
-
-
-
 $description = $html->find('div.module-productSpecification', 0);
 
-
-$c = 1;
-foreach ($description->find('img') as $pic) {
-    if($c%2 == 0){
-
-        array_push($pics, $pic->src);
-    }
-
-    $c++;
+for ($i=0; $i < sizeof($description->find('img'))-1; $i++) { 
+    
+        $description->find('img', $i)->src = $description->find('img', $i+1)->src;
+    
 }
-
-$c = 1;
-$count = 1;
-foreach ($description->find('img') as $pic) {
-    if($c%2 != 0){
-        $pic->src = $pics[$count];
-
-        $count++;
-    }
-
-    $c++;
-}
-
-
 echo $description;
 die();
+
 
 
 
