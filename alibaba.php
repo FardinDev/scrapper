@@ -44,33 +44,36 @@ foreach($thumb->find('img') as $item){
 
 
 
-echo $html->find('div.detail-box', 7)."<br>";
-$description = $html->find('div.scc-wrapper.detail-module.module-productSpecification', 0);
 
-foreach ($description->find('noscript') as $pic) {
-    
-    array_push($pics, $pic->innertext);
-}
+$description = $html->find('div.module-productSpecification', 0);
 
+
+$c = 1;
 foreach ($description->find('img') as $pic) {
-    
-    $pic->src = '';
-}
-$c = 0;
+    if($c%2 == 0){
 
-$count = 0;
-foreach ($pics as $p) {
+        array_push($pics, $pic->src);
+    }
 
-   if($count < sizeof($pics)-1){
-
-       $description->find('img[data-src]', $count)->innertext = $p;
-       $count++;
-   }
-
-    
+    $c++;
 }
 
-echo $description.'<br>';
+$c = 1;
+$count = 1;
+foreach ($description->find('img') as $pic) {
+    if($c%2 != 0){
+        $pic->src = $pics[$count];
+
+        $count++;
+    }
+
+    $c++;
+}
 
 
-// echo $c .' '.sizeof($pics);
+echo $description;
+die();
+
+
+
+
